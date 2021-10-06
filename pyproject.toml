@@ -105,10 +105,13 @@ warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
 module = [
-    'librflxlang',
     'astroid',
+    'langkit.*',
+    'librflxlang',
     'pylint.*',
     'ruamel',
+    'setuptools.*',
+    'wheel.*',
 ]
 ignore_missing_imports = true
 
