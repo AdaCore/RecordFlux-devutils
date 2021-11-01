@@ -40,7 +40,7 @@ install_devel:
 	pip3 install ".[devel]"
 
 install_devel_edge: install_devel
-	pip3 install --upgrade `python -c "from importlib.metadata import requires; print(' '.join(r.split(' ')[0] for r in requires('python-style') if 'devel' in r))"`
+	tools/upgrade_dependencies.py
 
 clean:
 	rm -rf .coverage .mypy_cache .pytest_cache
