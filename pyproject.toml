@@ -28,6 +28,7 @@ combine_as_imports = true
 known_third_party = [
     'gi',
     'icontract',
+    'pydantic',
     'pydotplus',
     'pytest',
     'z3',
@@ -50,6 +51,7 @@ disable = [
     'unsubscriptable-object',  # ISSUE: PyCQA/pylint#3045
     'useless-import-alias',
 ]
+extension-pkg-whitelist = "pydantic"
 
 [tool.pylint.basic]
 good-names = [
