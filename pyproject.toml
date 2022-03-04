@@ -155,3 +155,7 @@ exclude_lines = [
     'raise NotImplementedError',
     'return NotImplemented',
 ]
+
+[tool.flake8]
+max-line-length = 100
+extend-ignore = "E203, E501, E741, W503"
