@@ -30,8 +30,22 @@ class TestNamedBooleanArgumentsChecker(pylint.testutils.CheckerTestCase):  # typ
         """
         )
         with self.assertAddsMessages(
-            pylint.testutils.Message(msg_id="C0001", node=call.args[0]),
-            pylint.testutils.Message(msg_id="C0001", node=call.args[1]),
+            pylint.testutils.MessageTest(
+                msg_id="C0001",
+                node=call.args[0],
+                line=3,
+                col_offset=10,
+                end_line=3,
+                end_col_offset=14,
+            ),
+            pylint.testutils.MessageTest(
+                msg_id="C0001",
+                node=call.args[1],
+                line=3,
+                col_offset=16,
+                end_line=3,
+                end_col_offset=21,
+            ),
         ):
             self.checker.visit_call(call)
 
@@ -43,6 +57,13 @@ class TestNamedBooleanArgumentsChecker(pylint.testutils.CheckerTestCase):  # typ
         """
         )
         with self.assertAddsMessages(
-            pylint.testutils.Message(msg_id="C0001", node=call.args[0]),
+            pylint.testutils.MessageTest(
+                msg_id="C0001",
+                node=call.args[0],
+                line=3,
+                col_offset=10,
+                end_line=3,
+                end_col_offset=15,
+            ),
         ):
             self.checker.visit_call(call)
