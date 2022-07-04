@@ -43,7 +43,6 @@ enable = [
     'useless-suppression'
 ]
 disable = [
-    'bad-continuation',
     'duplicate-code',  # ISSUE: PyCQA/pylint#4118
     'inconsistent-return-statements',
     'missing-docstring',
