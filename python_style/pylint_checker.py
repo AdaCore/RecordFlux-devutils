@@ -1,19 +1,16 @@
 import astroid
 from pylint.checkers import BaseChecker
-from pylint.interfaces import IAstroidChecker
 
 
 class NamedBooleanArgumentsChecker(BaseChecker):  # type: ignore[misc]
-    __implements__ = IAstroidChecker
 
     name = "named-boolean-arguments"
-    priority = -1
     msgs = {
-        "C0001": {
+        "C0001": (
             "Anonymous boolean argument",
             "anon-bool-arg",
             "Boolean arguments must be passed as keywords",
-        }
+        )
     }
 
     def visit_call(self, node: astroid.Call) -> None:
