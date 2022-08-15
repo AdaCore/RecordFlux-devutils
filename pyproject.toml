@@ -133,6 +133,7 @@ ignore = [
 ]
 
 [tool.pytest.ini_options]
+addopts = '--tb=short'
 filterwarnings = [
     'ignore:visit_NameConstant is deprecated; add visit_Constant:PendingDeprecationWarning',
     'ignore:visit_Str is deprecated; add visit_Constant:PendingDeprecationWarning',
