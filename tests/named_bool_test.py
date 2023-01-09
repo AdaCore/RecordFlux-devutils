@@ -1,11 +1,11 @@
 import astroid
 import pylint.testutils
 
-import python_style.pylint_checker
+import devutils.pylint_checker
 
 
 class TestNamedBooleanArgumentsChecker(pylint.testutils.CheckerTestCase):  # type: ignore[misc]
-    CHECKER_CLASS = python_style.pylint_checker.NamedBooleanArgumentsChecker
+    CHECKER_CLASS = devutils.pylint_checker.NamedBooleanArgumentsChecker
 
     def test_valid_calls(self) -> None:
         nodes = astroid.extract_node(
