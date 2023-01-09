@@ -38,7 +38,7 @@ known_third_party = [
 
 [tool.pylint.master]
 jobs = 0
-load-plugins = 'python_style.pylint_checker'
+load-plugins = 'devutils.pylint_checker'
 
 [tool.pylint.messages_control]
 enable = [

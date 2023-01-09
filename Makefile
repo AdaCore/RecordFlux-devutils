@@ -1,7 +1,7 @@
 VERBOSE ?= @
 TMPDIR := $(shell mktemp -d)
 
-python-packages := python_style tests
+python-packages := devutils tests
 
 .PHONY: check check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle format test test_unit test_integration install install_devel install_edge clean
 

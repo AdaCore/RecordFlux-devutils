@@ -10,6 +10,6 @@ if sys.version_info >= (3, 8):
 else:
     from importlib_metadata import requires
 
-DEPENDENCIES = " ".join(r.split(" ")[0] for r in (requires("python-style") or []) if "devel" in r)
+DEPENDENCIES = " ".join(r.split(" ")[0] for r in (requires("RecordFlux-devutils") or []) if "devel" in r)
 
 call(f"pip3 install --upgrade {DEPENDENCIES}", shell=True)
