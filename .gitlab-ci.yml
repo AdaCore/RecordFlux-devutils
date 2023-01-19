@@ -1,0 +1,97 @@
+variables:
+   ANOD_DEFAULT_SANDBOX_DIR: /it/wave
+   GNAT_BUILD_DATE: "20220723"
+   PYTHON_VERSION: "3.11"
+
+stages:
+  - initialization
+  - testing
+
+##################
+# Initialization #
+##################
+
+.setup_gnat: &setup_gnat
+    - . ~/.aws_container_credentials
+    - export PATH=/it/e3/bin:$PATH
+    - anod install gnat --build-date $GNAT_BUILD_DATE
+    - eval `anod printenv gnat`
+
+.setup_python_venv: &setup_python_venv
+    - python$PYTHON_VERSION -m venv .venv$PYTHON_VERSION
+    - . .venv$PYTHON_VERSION/bin/activate
+    - python -m pip install --upgrade pip wheel
+    - make install_devel
+
+setup:
+  services:
+     - image:recordflux
+     - cpu:2
+     - mem:4
+  stage: initialization
+  artifacts:
+    paths:
+      - .venv3.8
+      - .venv3.9
+      - .venv3.10
+      - .venv3.11
+  script:
+    - *setup_gnat
+    - export PYTHON_VERSION=3.8
+    - *setup_python_venv
+    - export PYTHON_VERSION=3.9
+    - *setup_python_venv
+    - export PYTHON_VERSION=3.10
+    - *setup_python_venv
+    - export PYTHON_VERSION=3.11
+    - *setup_python_venv
+
+###########
+# Testing #
+###########
+
+.setup_python: &setup_python
+    - . .venv$PYTHON_VERSION/bin/activate
+
+.test:
+  stage: testing
+  dependencies:
+    - setup
+
+commit_messages:
+  extends: .test
+  dependencies: []
+  script:
+    - git fetch origin main
+    - git log origin/main..HEAD | sed -n "/^.*\b\(fixup\|FIXUP\|wip\|WIP\)\b.*/{p;s/.*/Found fixup commit/p;q1}"
+    - git log origin/main..HEAD | sed -n "/ \#[0-9][0-9]*/{p;s/.*/Found unqualified reference to ticket/p;q1}"
+
+checks:
+  extends: .test
+  services:
+     - image:recordflux
+     - cpu:2
+     - mem:4
+  script:
+    - *setup_gnat
+    - *setup_python
+    - make check
+
+tests:
+  extends: .test
+  services:
+     - image:recordflux
+     - cpu:2
+     - mem:4
+  parallel:
+    matrix:
+      - PYTHON_VERSION:
+        - "3.8"
+        - "3.9"
+        - "3.10"
+        - "3.11"
+  environment: $PYTHON_VERSION
+  script:
+    - *setup_gnat
+    - *setup_python
+    - make test
