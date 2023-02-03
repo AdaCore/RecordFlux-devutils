@@ -113,6 +113,7 @@ module = [
     'pylint.*',
     'ruamel',
     'setuptools.*',
+    'setuptools_scm.*',
     'wheel.*',
 ]
 ignore_missing_imports = true
