@@ -1,39 +1,45 @@
 VERBOSE ?= @
 TMPDIR := $(shell mktemp -d)
 
-python-packages := devutils tests
+PYTHON_PACKAGES := devutils tests
 
-.PHONY: check check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle format test test_unit test_integration install install_devel install_edge clean
+.PHONY: all
 
 all: check test
+
+.PHONY: check check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
 
 check: check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
 
 check_ruff:
-	ruff check $(python-packages)
+	ruff check $(PYTHON_PACKAGES)
 
 check_black:
-	black --check --diff --line-length 100 $(python-packages)
+	black --check --diff --line-length 100 $(PYTHON_PACKAGES)
 
 check_isort:
-	isort --check --diff $(python-packages)
+	isort --check --diff $(PYTHON_PACKAGES)
 
 check_flake8:
-	pflake8 $(python-packages)
+	pflake8 $(PYTHON_PACKAGES)
 
 check_pylint:
-	pylint $(python-packages)
+	pylint $(PYTHON_PACKAGES)
 
 check_mypy:
-	mypy --pretty $(python-packages)
+	mypy --pretty $(PYTHON_PACKAGES)
 
 check_pydocstyle:
-	pydocstyle $(python-packages)
+	pydocstyle $(PYTHON_PACKAGES)
+
+.PHONY: format
 
 format:
-	ruff check --fix-only $(python-packages) | true
-	black -l 100 $(python-packages)
-	isort $(python-packages)
+	ruff check --fix-only $(PYTHON_PACKAGES) | true
+	black -l 100 $(PYTHON_PACKAGES)
+	isort $(PYTHON_PACKAGES)
+
+.PHONY: test test_unit test_integration
 
 test: test_unit test_integration
 
@@ -47,6 +53,8 @@ $(TMPDIR)/bin/pylint:
 test_integration: $(TMPDIR)/bin/pylint
 	$< tests/data/pylint_boolean_argument_invalid.py
 
+.PHONY: install install_devel install_devel_edge
+
 install:
 	pip3 install --force-reinstall .
 
@@ -55,6 +63,8 @@ install_devel:
 
 install_devel_edge: install_devel
 	tools/upgrade_dependencies.py
+
+.PHONY: clean
 
 clean:
 	rm -rf .coverage .mypy_cache .pytest_cache
