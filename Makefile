@@ -3,11 +3,14 @@ TMPDIR := $(shell mktemp -d)
 
 python-packages := devutils tests
 
-.PHONY: check check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle format test test_unit test_integration install install_devel install_edge clean
+.PHONY: check check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle format test test_unit test_integration install install_devel install_edge clean
 
 all: check test
 
-check: check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
+check: check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
+
+check_ruff:
+	ruff check $(python-packages)
 
 check_black:
 	black --check --diff --line-length 100 $(python-packages)
@@ -28,6 +31,7 @@ check_pydocstyle:
 	pydocstyle $(python-packages)
 
 format:
+	ruff check --fix-only $(python-packages) | true
 	black -l 100 $(python-packages)
 	isort $(python-packages)
 

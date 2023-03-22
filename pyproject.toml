@@ -23,6 +23,59 @@ exclude = '''
 )/
 '''
 
+[tool.ruff]
+target-version = "py38"
+select = [
+    "F",    # pyflakes
+    "E",    # pycodestyle
+    "W",    # pycodestyle
+    "I",    # isort
+    "D",    # pydocstyle
+    "UP",   # pyupgrade
+    "PL",   # pylint
+    "RUF"   # ruff
+]
+ignore = [
+    "D100",    # public-module
+    "D101",    # public-class
+    "D102",    # public-method
+    "D103",    # public-function
+    "D104",    # public-package
+    "D105",    # magic-method
+    "D106",    # public-nested-class
+    "D107",    # public-init
+    "D202",    # no-blank-line-after-function
+    "D203",    # one-blank-line-before-class
+    "D212",    # multi-line-summary-first-line
+    "E501",    # line-too-long
+    "E741",    # ambiguous-variable-name
+    "UP007",   # typing-union
+    "PLC0414", # useless-import-alias
+    "PLC1901", # compare-to-empty-string
+    "PLR2004", # magic-value-comparison
+    "PLR5501", # collapsible-else-if
+    "RUF001",  # ambiguous-unicode-character-string
+    "RUF100",  # unused-noqa
+]
+line-length = 100
+
+[tool.ruff.isort]
+combine-as-imports = true
+known-third-party = [
+    'gi',
+    'icontract',
+    'pydantic',
+    'pydotplus',
+    'pytest',
+    'z3',
+]
+
+[tool.ruff.pylint]
+max-args = 6
+max-branches = 12
+max-returns = 10
+max-statements = 50
+
 [tool.isort]
 profile = 'black'
 line_length = 100
