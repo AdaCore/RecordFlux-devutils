@@ -3,36 +3,26 @@ PYLINT ?= pylint
 BLACK ?= black
 MYPY ?= mypy
 
-.PHONY: common_check check check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
+.PHONY: common_check check check_ruff check_pylint check_black check_mypy
 
-common_check: check_ruff check_black check_isort check_flake8 check_pylint check_mypy check_pydocstyle
+common_check: check_ruff check_pylint check_black check_mypy
 
 check: common_check
 
 check_ruff:
 	$(RUFF) check $(PYTHON_PACKAGES)
 
-check_black:
-	$(BLACK) --check --diff $(PYTHON_PACKAGES)
-
-check_isort:
-	isort --check --diff $(PYTHON_PACKAGES)
-
-check_flake8:
-	pflake8 $(PYTHON_PACKAGES)
-
 check_pylint:
 	$(PYLINT) $(PYTHON_PACKAGES)
 
+check_black:
+	$(BLACK) --check --diff $(PYTHON_PACKAGES)
+
 check_mypy:
 	$(MYPY) --pretty $(PYTHON_PACKAGES)
-
-check_pydocstyle:
-	pydocstyle $(PYTHON_PACKAGES)
 
 .PHONY: format
 
 format:
 	$(RUFF) check --fix-only $(PYTHON_PACKAGES) | true
 	$(BLACK) $(PYTHON_PACKAGES)
-	isort $(PYTHON_PACKAGES)

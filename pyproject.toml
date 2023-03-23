@@ -76,19 +76,6 @@ max-branches = 12
 max-returns = 10
 max-statements = 50
 
-[tool.isort]
-profile = 'black'
-line_length = 100
-combine_as_imports = true
-known_third_party = [
-    'gi',
-    'icontract',
-    'pydantic',
-    'pydotplus',
-    'pytest',
-    'z3',
-]
-
 [tool.pylint.master]
 jobs = 0
 load-plugins = 'devutils.pylint_checker'
@@ -171,21 +158,6 @@ module = [
 ]
 ignore_missing_imports = true
 
-[tool.pydocstyle]
-ignore = [
-    'D100',
-    'D101',
-    'D102',
-    'D103',
-    'D104',
-    'D105',
-    'D106',
-    'D107',
-    'D202',
-    'D203',
-    'D212',
-]
-
 [tool.pytest.ini_options]
 addopts = '--tb=short'
 filterwarnings = [
@@ -214,7 +186,3 @@ exclude_lines = [
     'raise NotImplementedError',
     'return NotImplemented',
 ]
-
-[tool.flake8]
-max-line-length = 100
-extend-ignore = "E203, E501, E741, W503"
