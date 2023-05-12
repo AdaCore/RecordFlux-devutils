@@ -1,7 +1,8 @@
 include Makefile.common
 
+.DEFAULT_GOAL := all
+
 VERBOSE ?= @
-TMPDIR := $(shell mktemp -d)
 
 PYTHON_PACKAGES := devutils tests
 
@@ -16,12 +17,10 @@ test: test_unit test_integration
 test_unit:
 	python3 -m pytest -vv tests
 
-$(TMPDIR)/bin/pylint:
-	python3 -m venv $(TMPDIR)
-	$(TMPDIR)/bin/pip install pylint .[devel]
-
-test_integration: $(TMPDIR)/bin/pylint
-	$< tests/data/pylint_boolean_argument_invalid.py
+test_integration:
+	python3 -m venv --clear build/venv
+	build/venv/bin/pip install pylint ".[devel]"
+	build/venv/bin/pylint tests/data/pylint_boolean_argument_invalid.py
 
 .PHONY: install install_devel install_devel_edge
 
@@ -37,4 +36,4 @@ install_devel_edge: install_devel
 .PHONY: clean
 
 clean:
-	rm -rf .coverage .mypy_cache .pytest_cache
+	rm -rf .coverage .mypy_cache .pytest_cache .ruff_cache build
