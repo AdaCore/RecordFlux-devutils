@@ -2,10 +2,11 @@ RUFF ?= ruff
 PYLINT ?= pylint
 BLACK ?= black
 MYPY ?= mypy
+KACL_CLI ?= kacl-cli
 
 .PHONY: common_check check check_ruff check_pylint check_black check_mypy
 
-common_check: check_ruff check_pylint check_black check_mypy
+common_check: check_ruff check_pylint check_black check_mypy check_kacl
 
 check: common_check
 
@@ -20,6 +21,9 @@ check_black:
 
 check_mypy:
 	$(MYPY) --pretty $(PYTHON_PACKAGES)
+
+check_kacl:
+	if [ -f CHANGELOG.md ]; then $(KACL_CLI) verify; fi
 
 .PHONY: format
 
