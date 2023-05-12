@@ -3,7 +3,6 @@ from pylint.checkers import BaseChecker
 
 
 class NamedBooleanArgumentsChecker(BaseChecker):  # type: ignore[misc]
-
     name = "named-boolean-arguments"
     msgs = {
         "C0001": (
