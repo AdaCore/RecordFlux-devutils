@@ -122,9 +122,6 @@ filterwarnings = [
     'ignore:visit_Str is deprecated; add visit_Constant:PendingDeprecationWarning',
 ]
 
-[tool.coverage.paths]
-source = ['rflx']
-
 [tool.coverage.run]
 branch = true
 concurrency = ['multiprocessing']
