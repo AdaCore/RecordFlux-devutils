@@ -21,8 +21,6 @@ stages:
 ##################
 
 .setup_gnat: &setup_gnat
-    - . ~/.aws_container_credentials
-    - export PATH=/it/e3/bin:$PATH
     - anod install gnat --build-date $GNAT_BUILD_DATE
     - eval `anod printenv gnat`
 
