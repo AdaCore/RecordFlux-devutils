@@ -26,14 +26,52 @@ exclude = '''
 [tool.ruff]
 target-version = "py38"
 select = [
-    "F",    # pyflakes
-    "E",    # pycodestyle
-    "W",    # pycodestyle
-    "I",    # isort
-    "D",    # pydocstyle
-    "UP",   # pyupgrade
-    "PL",   # pylint
-    "RUF"   # ruff
+    "F",     # pyflakes
+    "E",     # pycodestyle
+    "W",     # pycodestyle
+    "I",     # isort
+    "N",     # pep8-naming
+    "D",     # pydocstyle
+    "UP",    # pyupgrade
+    "YTT",   # flake8-2020
+    "ASYNC", # flake8-async
+    "S",     # flake8-bandit
+    "BLE",   # flake8-blind-except
+    "FBT",   # flake8-boolean-trap
+    "B",     # flake8-bugbear
+    "A",     # flake8-builtins
+    "COM",   # flake8-commas
+    "C4",    # flake8-comprehensions
+    "DTZ",   # flake8-datetimez
+    "T10",   # flake8-debugger
+    "EXE",   # flake8-executable
+    "FA",    # flake8-future-annotations
+    "ISC",   # flake8-implicit-str-concat
+    "ICN",   # flake8-import-conventions
+    "G",     # flake8-logging-format
+    "INP",   # flake8-no-pep420
+    "PIE",   # flake8-pie
+    "T20",   # flake8-print
+    "PYI",   # flake8-pyi
+    "PT",    # flake8-pytest-style
+    "Q",     # flake8-quotes
+    "RSE",   # flake8-raise
+    "RET",   # flake8-return
+    "SLF",   # flake8-self
+    "SLOT",  # flake8-slots
+    "SIM",   # flake8-simplify
+    "TID",   # flake8-tidy-imports
+    "INT",   # flake8-gettext
+    "ARG",   # flake8-unused-arguments
+    "PTH",   # flake8-use-pathlib
+    "TD",    # flake8-todos
+    "FIX",   # flake8-fixme
+    "PGH",   # pygrep-hooks
+    "PL",    # pylint
+    "TRY",   # tryceratops
+    "FLY",   # flynt
+    "PERF",  # Perflint
+    "RUF"    # ruff
 ]
 ignore = [
     "D100",    # public-module
@@ -50,12 +88,23 @@ ignore = [
     "E501",    # line-too-long
     "E741",    # ambiguous-variable-name
     "UP007",   # typing-union
+    "S101",    # assert
+    "S105",    # hardcoded-password-string
+    "S603",    # subprocess-without-shell-equals-true
+    "S607",    # start-process-with-partial-path
+    "FBT001",  # boolean-positional-arg-in-function-definition
+    "FBT002",  # boolean-default-value-in-function-definition
+    "B011",    # assert-false
+    "PT015",   # pytest-assert-always-false
+    "RET503",  # implicit-return
+    "TD003",   # missing-todo-link
+    "FIX002",  # line-contains-todo
     "PLC0414", # useless-import-alias
     "PLC1901", # compare-to-empty-string
     "PLR2004", # magic-value-comparison
     "PLR5501", # collapsible-else-if
+    "TRY003",  # raise-vanilla-args
     "RUF001",  # ambiguous-unicode-character-string
-    "RUF100",  # unused-noqa
 ]
 line-length = 100
 
