@@ -38,19 +38,9 @@ setup:
   stage: initialization
   artifacts:
     paths:
-      - .venv3.8
-      - .venv3.9
-      - .venv3.10
-      - .venv3.11
+      - .venv$PYTHON_VERSION
   script:
     - *setup_gnat
-    - export PYTHON_VERSION=3.8
-    - *setup_python_venv
-    - export PYTHON_VERSION=3.9
-    - *setup_python_venv
-    - export PYTHON_VERSION=3.10
-    - *setup_python_venv
-    - export PYTHON_VERSION=3.11
     - *setup_python_venv
 
 ###########
@@ -85,22 +75,3 @@ checks:
     - *setup_gnat
     - *setup_python
     - make check
-
-tests:
-  extends: .test
-  services:
-     - image:recordflux
-     - cpu:2
-     - mem:4
-  parallel:
-    matrix:
-      - PYTHON_VERSION:
-        - "3.8"
-        - "3.9"
-        - "3.10"
-        - "3.11"
-  environment: $PYTHON_VERSION
-  script:
-    - *setup_gnat
-    - *setup_python
-    - make test

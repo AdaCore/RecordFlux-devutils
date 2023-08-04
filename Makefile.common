@@ -1,20 +1,16 @@
 RUFF ?= ruff
-PYLINT ?= pylint
 BLACK ?= black
 MYPY ?= mypy
 KACL_CLI ?= kacl-cli
 
-.PHONY: common_check check check_ruff check_pylint check_black check_mypy
+.PHONY: common_check check check_ruff check_black check_mypy
 
-common_check: check_ruff check_pylint check_black check_mypy check_kacl
+common_check: check_ruff check_black check_mypy check_kacl
 
 check: common_check
 
 check_ruff:
 	$(RUFF) check $(PYTHON_PACKAGES)
-
-check_pylint:
-	$(PYLINT) $(PYTHON_PACKAGES)
 
 check_black:
 	$(BLACK) --check --diff $(PYTHON_PACKAGES)

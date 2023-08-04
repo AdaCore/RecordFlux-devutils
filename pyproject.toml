@@ -125,14 +125,6 @@ max-branches = 12
 max-returns = 10
 max-statements = 50
 
-[tool.pylint.master]
-jobs = 0
-load-plugins = 'devutils.pylint_checker'
-
-[tool.pylint.messages_control]
-disable = ['all']
-enable = ['anon-bool-arg']
-
 [tool.mypy]
 mypy_path = 'stubs'
 check_untyped_defs = true
