@@ -85,7 +85,6 @@ ignore = [
     "D202",    # no-blank-line-after-function
     "D203",    # one-blank-line-before-class
     "D212",    # multi-line-summary-first-line
-    "E501",    # line-too-long
     "E741",    # ambiguous-variable-name
     "UP007",   # typing-union
     "S101",    # assert
