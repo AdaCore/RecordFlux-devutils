@@ -75,3 +75,4 @@ checks:
     - *setup_gnat
     - *setup_python
     - make check
+    - make test

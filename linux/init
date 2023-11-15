@@ -1,0 +1,35 @@
+#!/bin/bash -eu
+#
+# (Virtualized) Linux init process.
+#
+# Perform necessary setup, change into the directory passed via the
+# "working_dir=" kernel parameter and then run the command passed via the
+# "command=" kernel parameter. When finished, signal the exit code of the
+# command back to Qemu and exit.
+
+exit_qemu() {
+    RV=$?
+    set +e
+
+    # Convert return code into a 4-byte binary value and write it to the configured
+    # port of the Qemu isa-debug-exit device to shut down the virtual machine with
+    # that exit code.
+    printf '00000000: %02x 00 00 00' ${RV} | xxd -r | dd of=/dev/port seek=${exit_port} bs=1 count=4 status=none
+
+    # Fallthrough: reboot in case the above command didn't exit Qemu. When used in
+    # conjunction with Qemu's --no-reboot parameter, this is safer (with respect to
+    # stuck CI runs) than halting the VM.
+    echo 1 > /proc/sys/kernel/sysrq
+    echo b > /proc/sysrq-trigger
+}
+
+trap "exit_qemu" ERR EXIT
+
+mount -t proc none /proc
+echo 0 > /proc/sys/kernel/printk
+
+ip link set up dev lo
+ip route add default dev lo
+
+cd ${working_dir}
+${command}

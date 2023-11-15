@@ -1,0 +1,32 @@
+#!/bin/bash -u
+#
+# Change into the directory passed as the first parameter, execute the command
+# passed as the remaining parameters inside a Linux VM and return the exit
+# code of the execution.
+
+WORKING_DIR=$1
+shift
+COMMAND=$*
+
+BASE_DIR=$(dirname $(realpath $0))
+LINUX=${BASE_DIR}/kernel
+EXIT_PORT=244
+
+qemu-system-x86_64 \
+   -nographic \
+   -no-reboot \
+   -serial stdio \
+   -monitor none \
+   -m 2048 \
+   -machine pc,accel=tcg,usb=off,dump-guest-core=off \
+   -rtc base=utc \
+   -boot strict=on \
+   -kernel ${LINUX} \
+   -append "init=${BASE_DIR}/init working_dir=${WORKING_DIR} command=\"${COMMAND}\" exit_port=${EXIT_PORT}" \
+   -fsdev local,id=fsdev-fsRoot,security_model=none,multidevs=remap,path=/ \
+   -device virtio-9p-pci,id=fsRoot,fsdev=fsdev-fsRoot,mount_tag=fsRoot \
+   -device isa-debug-exit,iobase=${EXIT_PORT},iosize=0x04 \
+
+# Qemu's exit code is the one provided to the isa-debug-exit device, but shifted one bit left.
+# Revert the value to the original one.
+exit $[$? / 2]
