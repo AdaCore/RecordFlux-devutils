@@ -4,16 +4,22 @@ include Makefile.common
 
 VERBOSE ?= @
 SHELL = /bin/bash -o pipefail
+PYTEST = python3 -m pytest -vv
 
-PYTHON_PACKAGES := devutils
+PYTHON_PACKAGES := devutils tests
 
 .PHONY: all
 
 all: check test
 
-.PHONY: install install_devel install_devel_edge test
+.PHONY: install install_devel install_devel_edge test test_devutils test_linux
 
-test:
+test: test_devutils test_linux
+
+test_devutils:
+	$(PYTEST) --cov --cov-branch --cov-fail-under=100 tests
+
+test_linux:
 	./linux/run $(PWD) true; test $$? -eq 0
 	./linux/run $(PWD) false; test $$? -eq 1
 	./linux/run $(PWD) does_not_exist; test $$? -eq 127
