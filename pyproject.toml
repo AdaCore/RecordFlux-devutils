@@ -148,6 +148,7 @@ module = [
     'astroid',
     'langkit.*',
     'pylint.*',
+    'pythonfuzz.*',
     'ruamel',
     'setuptools.*',
     'setuptools_scm.*',
