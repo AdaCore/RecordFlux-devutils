@@ -9,20 +9,20 @@ common_check: check_ruff check_black check_mypy check_kacl
 
 check: common_check
 
-check_ruff:
+check_ruff: $(DEVUTILS_DEPENDENCIES)
 	$(RUFF) check $(PYTHON_PACKAGES)
 
-check_black:
+check_black: $(DEVUTILS_DEPENDENCIES)
 	$(BLACK) --check --diff $(PYTHON_PACKAGES)
 
-check_mypy:
+check_mypy: $(DEVUTILS_DEPENDENCIES)
 	$(MYPY) --pretty $(PYTHON_PACKAGES)
 
-check_kacl:
+check_kacl: $(DEVUTILS_DEPENDENCIES)
 	if [ -f CHANGELOG.md ]; then $(KACL_CLI) verify; fi
 
 .PHONY: format
 
-format:
+format: $(DEVUTILS_DEPENDENCIES)
 	$(RUFF) check --fix-only $(PYTHON_PACKAGES) | true
 	$(BLACK) $(PYTHON_PACKAGES)
