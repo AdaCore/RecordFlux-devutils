@@ -41,7 +41,7 @@ def check_commits(commits: Sequence[Commit]) -> list[str]:
     for commit in commits:
         if any(k in l for l in commit.body for k in ["fixup", "FIXUP", "wip", "WIP"]):
             errors.append(f"Fixup commit {commit.identifier}")
-        if not any(re.search(r"Ref. (\S\S*[#!][0-9][0-9]*|None)", l) for l in commit.body):
+        if not any(re.search(r"Ref\. (\S\S*[#!][0-9][0-9]*|None)", l) for l in commit.body):
             errors.append(
                 f'No ticket reference of the form "Ref. Project#123" or "Ref. None"'
                 f" in commit {commit.identifier}",
