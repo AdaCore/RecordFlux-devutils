@@ -25,6 +25,9 @@ extend-exclude = '''
 
 [tool.ruff]
 target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
 select = [
     "F",     # pyflakes
     "E",     # pycodestyle
@@ -105,9 +108,8 @@ ignore = [
     "TRY003",  # raise-vanilla-args
     "RUF001",  # ambiguous-unicode-character-string
 ]
-line-length = 100
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 known-third-party = [
     'gi',
@@ -118,7 +120,7 @@ known-third-party = [
     'z3',
 ]
 
-[tool.ruff.pylint]
+[tool.ruff.lint.pylint]
 max-args = 6
 max-branches = 12
 max-returns = 10
