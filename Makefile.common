@@ -1,7 +1,11 @@
 RUFF ?= ruff
+RUFF_ARGS ?=
 BLACK ?= black
+BLACK_ARGS ?=
 MYPY ?= mypy
+MYPY_ARGS ?=
 KACL_CLI ?= kacl-cli
+KACL_CLI_ARGS ?=
 
 .PHONY: common_check check check_ruff check_black check_mypy
 
@@ -10,19 +14,19 @@ common_check: check_ruff check_black check_mypy check_kacl
 check: common_check
 
 check_ruff: $(DEVUTILS_DEPENDENCIES)
-	$(RUFF) check $(PYTHON_PACKAGES)
+	$(RUFF) check $(RUFF_ARGS) $(PYTHON_PACKAGES)
 
 check_black: $(DEVUTILS_DEPENDENCIES)
-	$(BLACK) --check --diff $(PYTHON_PACKAGES)
+	$(BLACK) --check --diff $(BLACK_ARGS) $(PYTHON_PACKAGES)
 
 check_mypy: $(DEVUTILS_DEPENDENCIES)
-	$(MYPY) --pretty $(PYTHON_PACKAGES)
+	$(MYPY) --pretty $(MYPY_ARGS) $(PYTHON_PACKAGES)
 
 check_kacl: $(DEVUTILS_DEPENDENCIES)
-	if [ -f CHANGELOG.md ]; then $(KACL_CLI) verify; fi
+	if [ -f CHANGELOG.md ]; then $(KACL_CLI) $(KACL_CLI_ARGS) verify; fi
 
 .PHONY: format
 
 format: $(DEVUTILS_DEPENDENCIES)
-	$(RUFF) check --fix-only $(PYTHON_PACKAGES) | true
-	$(BLACK) $(PYTHON_PACKAGES)
+	$(RUFF) check --fix-only $(RUFF_ARGS) $(PYTHON_PACKAGES) | true
+	$(BLACK) $(BLACK_ARGS) $(PYTHON_PACKAGES)
