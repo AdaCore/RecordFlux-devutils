@@ -26,9 +26,10 @@ stages:
 
 setup:
   services:
-     - image:recordflux
-     - cpu:2
-     - mem:4
+    - image:recordflux
+    - cpu:2
+    - mem:4
+    - security_group:GitLabRunnerTasksExecPrivilegedSG
   stage: initialization
   artifacts:
     paths:
@@ -51,7 +52,8 @@ setup:
 commit_messages:
   extends: .test
   services:
-     - image:recordflux
+    - image:recordflux
+    - security_group:GitLabRunnerTasksExecDefaultSG
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   script:
@@ -62,9 +64,10 @@ commit_messages:
 checks:
   extends: .test
   services:
-     - image:recordflux
-     - cpu:2
-     - mem:4
+    - image:recordflux
+    - cpu:2
+    - mem:4
+    - security_group:GitLabRunnerTasksExecDefaultSG
   script:
     - *setup_python
     - make check
