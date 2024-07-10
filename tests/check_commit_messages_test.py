@@ -72,13 +72,13 @@ def test_check_commits() -> None:
         [
             Commit("0", ["Add foo", "", "Ref. eng/recordflux/RecordFlux#123"]),
             Commit("1", ["Change bar"]),
-            Commit("2", ["WIP", "", "Ref. eng/recordflux/RecordFlux#123"]),
+            Commit("2", ["FIX", "", "Ref. eng/recordflux/RecordFlux#123"]),
         ],
     ) == [
         'No ticket reference of the form "Ref. Project#123" or "Ref. None" in commit 1',
         "Fixup commit 2",
     ]
-    assert check_commits([Commit("4", ["WIP"])]) == [
+    assert check_commits([Commit("4", ["fixup"])]) == [
         "Fixup commit 4",
         'No ticket reference of the form "Ref. Project#123" or "Ref. None" in commit 4',
     ]
