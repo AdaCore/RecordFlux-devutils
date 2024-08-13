@@ -6,7 +6,6 @@ import subprocess
 import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Optional, Union
 
 
 @dataclass
@@ -17,7 +16,7 @@ class Commit:
 
 def parse_commits(log: str) -> list[Commit]:
     commits = []
-    identifier: Optional[str] = None
+    identifier: str | None = None
     body: list[str] = []
 
     for line in log.split("\n"):
@@ -59,7 +58,7 @@ def git_log(revision_range: str) -> str:
     ).decode("utf-8")
 
 
-def main() -> Union[int, str]:
+def main() -> int | str:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "revision_range",
