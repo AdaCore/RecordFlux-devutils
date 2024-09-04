@@ -161,6 +161,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 addopts = '--tb=short'
+asyncio_default_fixture_loop_scope = 'function'
 filterwarnings = [
     'ignore:visit_NameConstant is deprecated; add visit_Constant:PendingDeprecationWarning',
     'ignore:visit_Str is deprecated; add visit_Constant:PendingDeprecationWarning',
